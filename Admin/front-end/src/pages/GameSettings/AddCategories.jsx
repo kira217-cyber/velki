@@ -4,13 +4,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const categoriesList = [
-  "Cricket",
-  "Casino",
+  "Popular",
+  "Live",
+  "Table",
   "Slot",
-  "Table Game",
-  "Crash",
-  "SB",
-  "Catching Fish",
+  "Fishing",
+  "Egame",
 ];
 
 const AddCategories = () => {
@@ -297,7 +296,7 @@ const AddCategories = () => {
               alt={cat.categoryName}
               className="w-full h-56 object-cover"
             />
-            <div className="p-6 bg-gradient-to-b from-yellow-50 to-white">
+            <div className="p-2 bg-gradient-to-b from-yellow-50 to-white">
               <div className="flex items-center gap-4 mb-4">
                 <img
                   src={`${import.meta.env.VITE_API_URL}${cat.iconImage}`}
@@ -305,11 +304,11 @@ const AddCategories = () => {
                   className="w-16 h-16 rounded-xl border-4 border-yellow-300 shadow-md"
                 />
                 <div>
-                  <h3 className="font-bold text-xl text-gray-800">
-                    {cat.categoryName}
+                  <h3 className="font-bold text-lg text-gray-800">
+                    Category: {cat.categoryName}
                   </h3>
                   <p className="text-sm text-gray-600 font-medium">
-                    {cat.providerName}
+                   Provider: {cat.providerName}
                   </p>
                 </div>
               </div>

@@ -9,13 +9,12 @@ const categoriesSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       enum: [
-        "Cricket",
-        "Casino",
+        "Popular",
+        "Live",
+        "Table",
         "Slot",
-        "Table Game",
-        "Crash",
-        "SB",
-        "Catching Fish",
+        "Fishing",
+        "Egame",
       ],
     },
     providerId: {

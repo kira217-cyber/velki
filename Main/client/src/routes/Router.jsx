@@ -26,7 +26,7 @@ import Kyc from "@/pages/home/Kyc/Kyc";
 import Leagues from "@/pages/home/Leagues/Leagues";
 import Login from "@/pages/home/Login/Login";
 import PrivacyPolicy from "@/pages/home/PrivacyPolicy/PrivacyPolicy";
-import Register from "@/pages/home/Register/Register";
+// import Register from "@/pages/home/Register/Register";
 import ResponsibleGaming from "@/pages/home/ResponsibleGaming/ResponsibleGaming";
 import RulesRegulation from "@/pages/home/RulesRegulation/RulesRegulation";
 import Sports from "@/pages/home/Sports/Sports";
@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute> <Withdraw /> </PrivateRoute>,
       },
       { path: "/login", element: <Login /> },
-      { path: "/signup", element: <Register /> },
+      // { path: "/signup", element: <Register /> },
       { path: "/terms-conditions", element: <TermsAndCondition /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
       { path: "/rules-regulation", element: <RulesRegulation /> },
