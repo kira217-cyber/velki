@@ -11,9 +11,9 @@ const selectedGameSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isHot: { type: Boolean, default: false },
+    isCatalog: { type: Boolean, default: false },
     isLatest: { type: Boolean, default: false },
-    isLive: { type: Boolean, default: false },
+    isA_Z: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

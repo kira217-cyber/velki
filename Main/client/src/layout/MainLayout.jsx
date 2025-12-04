@@ -34,6 +34,7 @@ const MainLayout = () => {
       console.log("Settings response data:", res.data);
       if (res.data) {
         setTitle(res.data.title || "My App");
+        console.log(res.data)
         setFavicon(res.data.faviconUrl || "/favicon.ico");
         if (res.data._id) setId(res.data._id);
       }

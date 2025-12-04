@@ -13,6 +13,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+// NEW: GET Only Array of gameId only
+router.get("/ids", async (req, res) => {
+  try {
+    const selectedGames = await SelectedGame.find({}, "gameId");
+    const gameIds = selectedGames.map((game) => game.gameId.toString());
+
+    res.json({
+      success: true,
+      count: gameIds.length,
+      data: gameIds, // শুধু array of strings
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 // POST Select Game
 router.post("/", async (req, res) => {
   try {

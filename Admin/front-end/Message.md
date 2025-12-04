@@ -171,7 +171,7 @@ Note:
 
 ### Get Games By Array of IDs
 
-- **POST** `/api/games/by-ids`
+- **POST** `https://apigames.oracleapi.net/api/games/by-ids`
 - **Headers:** `x-api-key: <apiKey>`
 - **Body:**
 

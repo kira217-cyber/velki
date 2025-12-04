@@ -14,7 +14,9 @@ const AddGame = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/categories`
+        );
         setCategories(res.data.data || []);
       } catch (err) {
         toast.error("Failed to load providers");
@@ -27,7 +29,9 @@ const AddGame = () => {
   useEffect(() => {
     const fetchSelectedGames = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/selected-games`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/selected-games`
+        );
         setSelectedGames(res.data.data || []);
       } catch (err) {
         console.error(err);
@@ -50,7 +54,8 @@ const AddGame = () => {
           `https://apigames.oracleapi.net/api/games/pagination?page=1&limit=100&provider=${selectedProviderId}`,
           {
             headers: {
-              "x-api-key": "b4fb7adb955b1078d8d38b54f5ad7be8ded17cfba85c37e4faa729ddd679d379",
+              "x-api-key":
+                "b4fb7adb955b1078d8d38b54f5ad7be8ded17cfba85c37e4faa729ddd679d379",
             },
           }
         );
@@ -72,15 +77,22 @@ const AddGame = () => {
     try {
       if (isSelected) {
         const selectedGame = selectedGames.find((sg) => sg.gameId === game._id);
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/selected-games/${selectedGame._id}`);
-        setSelectedGames(prev => prev.filter(sg => sg.gameId !== game._id));
+        await axios.delete(
+          `${import.meta.env.VITE_API_URL}/api/selected-games/${
+            selectedGame._id
+          }`
+        );
+        setSelectedGames((prev) => prev.filter((sg) => sg.gameId !== game._id));
         toast.success("Game removed");
       } else {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/selected-games`, {
-          gameId: game._id,
-          gameUuid: game.game_uuid,
-        });
-        setSelectedGames(prev => [...prev, res.data.data]);
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/selected-games`,
+          {
+            gameId: game._id,
+            gameUuid: game.game_uuid,
+          }
+        );
+        setSelectedGames((prev) => [...prev, res.data.data]);
         toast.success("Game added successfully!");
       }
     } catch (err) {
@@ -89,16 +101,18 @@ const AddGame = () => {
   };
 
   const handleFlagChange = async (gameId, flag, checked) => {
-    const selectedGame = selectedGames.find(sg => sg.gameId === gameId);
+    const selectedGame = selectedGames.find((sg) => sg.gameId === gameId);
     if (!selectedGame) return;
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/selected-games/${selectedGame._id}`,
+        `${import.meta.env.VITE_API_URL}/api/selected-games/${
+          selectedGame._id
+        }`,
         { [flag]: checked }
       );
-      setSelectedGames(prev =>
-        prev.map(sg => (sg._id === selectedGame._id ? res.data.data : sg))
+      setSelectedGames((prev) =>
+        prev.map((sg) => (sg._id === selectedGame._id ? res.data.data : sg))
       );
       toast.success(`${flag} updated`);
     } catch (err) {
@@ -106,8 +120,10 @@ const AddGame = () => {
     }
   };
 
-  const isGameSelected = (gameId) => selectedGames.some(sg => sg.gameId === gameId);
-  const getSelectedGame = (gameId) => selectedGames.find(sg => sg.gameId === gameId);
+  const isGameSelected = (gameId) =>
+    selectedGames.some((sg) => sg.gameId === gameId);
+  const getSelectedGame = (gameId) =>
+    selectedGames.find((sg) => sg.gameId === gameId);
 
   return (
     <div className="p-8 max-w-7xl mx-auto bg-gray-50 min-h-screen">
@@ -139,7 +155,9 @@ const AddGame = () => {
         {!selectedProviderId ? (
           <div className="text-center py-20">
             <div className="bg-gray-200 border-2 border-dashed rounded-xl w-32 h-32 mx-auto mb-6" />
-            <p className="text-2xl text-gray-500">Please select a provider to view games</p>
+            <p className="text-2xl text-gray-500">
+              Please select a provider to view games
+            </p>
           </div>
         ) : loadingGames ? (
           <div className="text-center py-20">
@@ -163,19 +181,38 @@ const AddGame = () => {
                 <div
                   key={game._id}
                   className={`bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-105 ${
-                    selected ? "ring-4 ring-yellow-400 border-4 border-yellow-300" : "border border-gray-200"
+                    selected
+                      ? "ring-4 ring-yellow-400 border-4 border-yellow-300"
+                      : "border border-gray-200"
                   }`}
                 >
                   <div className="relative">
-                    <img
-                      src={`https://apigames.oracleapi.net/${game.image}`}
-                      alt={game.name}
-                      className="w-full h-56 object-cover"
-                    />
+                    {game?.projectImageDocs?.filter(
+                      (item) => item.projectName?.title 
+                    )?.length > 0 ? (
+                      game.projectImageDocs
+                        .filter((item) => item.projectName?.title === "Velki")
+                        .map((item) => (
+                          <img
+                            key={item._id}
+                            src={`https://apigames.oracleapi.net/${item.image}`}
+                            alt={item.projectName?.title}
+                            className="w-full h-56 object-cover"
+                            onError={(e) => {
+                              e.target.src = "/no-image.png"; // fallback image
+                            }}
+                          />
+                        ))
+                    ) : (
+                      <div className="w-full h-56 flex justify-center items-center bg-gray-200 text-black font-semibold">
+                        Image Not Found
+                      </div>
+                    )}
+
                     {selected && (
                       <div className="absolute top-3 right-3 bg-yellow-500 text-black font-bold px-3 py-1 rounded-full text-sm">
-                      Selected
-                    </div>
+                        Selected
+                      </div>
                     )}
                   </div>
 
@@ -203,17 +240,29 @@ const AddGame = () => {
                         <label className="flex items-center gap-3">
                           <input
                             type="checkbox"
-                            checked={selectedData?.isHot || false}
-                            onChange={(e) => handleFlagChange(game._id, "isHot", e.target.checked)}
+                            checked={selectedData?.isCatalog || false}
+                            onChange={(e) =>
+                              handleFlagChange(
+                                game._id,
+                                "isCatalog",
+                                e.target.checked
+                              )
+                            }
                             className="w-5 h-5 text-red-600 rounded"
                           />
-                          <span className="font-medium">Hot Game</span>
+                          <span className="font-medium">Catelog Game</span>
                         </label>
                         <label className="flex items-center gap-3">
                           <input
                             type="checkbox"
                             checked={selectedData?.isLatest || false}
-                            onChange={(e) => handleFlagChange(game._id, "isLatest", e.target.checked)}
+                            onChange={(e) =>
+                              handleFlagChange(
+                                game._id,
+                                "isLatest",
+                                e.target.checked
+                              )
+                            }
                             className="w-5 h-5 text-blue-600 rounded"
                           />
                           <span className="font-medium">Latest Game</span>
@@ -221,11 +270,17 @@ const AddGame = () => {
                         <label className="flex items-center gap-3">
                           <input
                             type="checkbox"
-                            checked={selectedData?.isLive || false}
-                            onChange={(e) => handleFlagChange(game._id, "isLive", e.target.checked)}
+                            checked={selectedData?.isA_Z || false}
+                            onChange={(e) =>
+                              handleFlagChange(
+                                game._id,
+                                "isA_Z",
+                                e.target.checked
+                              )
+                            }
                             className="w-5 h-5 text-green-600 rounded"
                           />
-                          <span className="font-medium">Live Game</span>
+                          <span className="font-medium">A-Z Game</span>
                         </label>
                       </div>
                     )}
