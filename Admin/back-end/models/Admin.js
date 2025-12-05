@@ -1,5 +1,6 @@
 // models/Admin.js
 import mongoose from "mongoose";
+import gameHistory from "./GameHistory.js"
 
 const adminSchema = new mongoose.Schema(
   {
@@ -19,6 +20,7 @@ const adminSchema = new mongoose.Schema(
     totalBal: { type: Number, default: 0 },
     playerBal: { type: Number, default: 0 },
     refPL: { type: Number, default: 0 },
+    gameHistory:[gameHistory],
 
     timeZone: { type: String, default: "Asia/Dhaka" },
     status: { type: String, default: "Active" },

@@ -23,6 +23,7 @@ import depositRequestRoutes from "./routes/depositRequestRoutes.js"; // New rout
 import withdrawRoutes from "./routes/withdrawRoutes.js"; // New route
 import categoriesRoutes from "./routes/categoriesRoutes.js";
 import selectedGamesRoutes from "./routes/selectedGameRoutes.js";
+import callBackRoutes from "./routes/callBackRoutes.js"
 
 
 import path from "path";
@@ -67,6 +68,7 @@ app.use("/api", depositRequestRoutes); // নতুন যোগ
 app.use("/api", withdrawRoutes); // API রুট মাউন্ট
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/selected-games", selectedGamesRoutes);
+app.use("/api/callback-data-game", callBackRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT} v2.0`));
